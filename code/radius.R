@@ -1,0 +1,177 @@
+########################################################################
+#
+#  create main F5500,sche_a,broker data
+#  Author: Ray Cheng
+#  Date:2018-10-31
+#
+#
+########################################################################
+## data file path
+folder_path="C:/Users/Administrator/Desktop/BizQualify/"
+
+## read in latest f5500 data
+F5500_orig=read.csv(paste0(folder_path,"f_5500_2017_latest.csv"),header=T)
+F5500_scha_orig=read.csv(paste0(folder_path,"F_SCH_A_2017_latest.csv"),header=T)
+F5500_part1_orig=read.csv(paste0(folder_path,"F_SCH_A_PART1_2017_latest.csv"),header=T)
+
+
+## rename
+names(F5500_orig)=paste0("BQ_PLAN_",names(F5500_orig))
+F5500_orig$BQ_PLAN_FILING_ID=F5500_orig$BQ_PLAN_ACK_ID
+F5500_orig$COMPANY_EIN=F5500_orig$BQ_PLAN_SPONS_DFE_EIN
+F5500_orig$BQ_TICKER=NA
+F5500_orig$BQ_COMPANY_LEGAL_NAME=F5500_orig$BQ_PLAN_SPONSOR_DFE_NAME
+F5500_orig$BQ_COMPANY_ADDRESS1_LINE_1=F5500_orig$BQ_PLAN_SPONS_DFE_MAIL_US_ADDRESS1
+F5500_orig$BQ_COMPANY_ADDRESS1_LINE_2=F5500_orig$BQ_PLAN_SPONS_DFE_MAIL_US_ADDRESS2
+F5500_orig$BQ_COMPANY_ADDRESS1_CITY=F5500_orig$BQ_PLAN_SPONS_DFE_MAIL_US_CITY
+F5500_orig$BQ_COMPANY_ADDRESS1_STATE=F5500_orig$BQ_PLAN_SPONS_DFE_MAIL_US_STATE
+F5500_orig$BQ_COMPANY_ADDRESS1_ZIP5=F5500_orig$BQ_PLAN_SPONS_DFE_MAIL_US_ZIP
+F5500_orig$BQ_INDUSTRY_NAME=NA
+F5500_orig$BQ_INDUSTRY_SUB_SECTOR=NA
+F5500_orig$BQ_INDUSTRY_SECTOR=NA
+F5500_orig$BQ_COMPANY_PHONE=F5500_orig$BQ_PLAN_SPONS_DFE_PHONE_NUM
+F5500_orig$BQ_WEBSITE=NA
+varlist=c('BQ_PLAN_FILING_ID',
+          'COMPANY_EIN',
+          'BQ_TICKER',
+          'BQ_COMPANY_LEGAL_NAME',
+          'BQ_COMPANY_ADDRESS1_LINE_1',
+          'BQ_COMPANY_ADDRESS1_LINE_2',
+          'BQ_COMPANY_ADDRESS1_CITY',
+          'BQ_COMPANY_ADDRESS1_STATE',
+          'BQ_COMPANY_ADDRESS1_ZIP5',
+          'BQ_INDUSTRY_NAME',
+          'BQ_INDUSTRY_SUB_SECTOR',
+          'BQ_INDUSTRY_SECTOR',
+          'BQ_COMPANY_PHONE',
+          'BQ_WEBSITE',
+          'BQ_PLAN_FORM_PLAN_YEAR_BEGIN_DATE',
+          'BQ_PLAN_FORM_TAX_PRD',
+          'BQ_PLAN_TYPE_PLAN_ENTITY_CD',
+          'BQ_PLAN_INITIAL_FILING_IND',
+          'BQ_PLAN_AMENDED_IND',
+          'BQ_PLAN_FINAL_FILING_IND',
+          'BQ_PLAN_SHORT_PLAN_YR_IND',
+          'BQ_PLAN_COLLECTIVE_BARGAIN_IND',
+          'BQ_PLAN_F5558_APPLICATION_FILED_IND',
+          'BQ_PLAN_EXT_AUTOMATIC_IND',
+          'BQ_PLAN_DFVC_PROGRAM_IND',
+          'BQ_PLAN_EXT_SPECIAL_IND',
+          'BQ_PLAN_PLAN_NAME',
+          'BQ_PLAN_SPONS_DFE_PN',
+          'BQ_PLAN_PLAN_EFF_DATE',
+          'BQ_PLAN_ADMIN_SIGNED_DATE',
+          'BQ_PLAN_ADMIN_SIGNED_NAME',
+          'BQ_PLAN_SPONS_SIGNED_DATE',
+          'BQ_PLAN_SPONS_SIGNED_NAME',
+          'BQ_PLAN_TOT_PARTCP_BOY_CNT',
+          'BQ_PLAN_TOT_ACT_PARTCP_BOY_CNT',
+          'BQ_PLAN_TOT_ACTIVE_PARTCP_CNT',
+          'BQ_PLAN_RTD_SEP_PARTCP_RCVG_CNT',
+          'BQ_PLAN_RTD_SEP_PARTCP_FUT_CNT',
+          'BQ_PLAN_BENEF_RCVG_BNFT_CNT',
+          'BQ_PLAN_TOT_ACT_RTD_SEP_BENEF_CNT',
+          'BQ_PLAN_SEP_PARTCP_PARTL_VSTD_CNT',
+          'BQ_PLAN_TYPE_WELFARE_BNFT_CODE',
+          'BQ_PLAN_FUNDING_INSURANCE_IND',
+          'BQ_PLAN_FUNDING_SEC412_IND',
+          'BQ_PLAN_FUNDING_TRUST_IND',
+          'BQ_PLAN_FUNDING_GEN_ASSET_IND',
+          'BQ_PLAN_BENEFIT_INSURANCE_IND',
+          'BQ_PLAN_BENEFIT_SEC412_IND',
+          'BQ_PLAN_BENEFIT_TRUST_IND',
+          'BQ_PLAN_BENEFIT_GEN_ASSET_IND',
+          'BQ_PLAN_DATE_RECEIVED',
+          'BQ_PLAN_SCH_A_ATTACHED_IND')
+F5500_20181031=F5500_orig[,varlist]
+
+
+names(F5500_scha_orig)=paste0("BQ_PLAN_",names(F5500_scha_orig))
+F5500_scha_orig$BQ_PLAN_FILING_ID=F5500_scha_orig$BQ_PLAN_ACK_ID
+F5500_scha_orig$BQ_PLAN_SCHEDULE_A_FORM_NUMBER=F5500_scha_orig$BQ_PLAN_FORM_ID
+varlist_schea=c('BQ_PLAN_FILING_ID',
+                'BQ_PLAN_SCHEDULE_A_FORM_NUMBER',
+                'BQ_PLAN_INS_CARRIER_NAME',
+                'BQ_PLAN_INS_CARRIER_EIN',
+                'BQ_PLAN_INS_CARRIER_NAIC_CODE',
+                'BQ_PLAN_INS_CONTRACT_NUM',
+                'BQ_PLAN_INS_PRSN_COVERED_EOY_CNT',
+                'BQ_PLAN_INS_POLICY_FROM_DATE',
+                'BQ_PLAN_INS_POLICY_TO_DATE',
+                'BQ_PLAN_INS_BROKER_COMM_TOT_AMT',
+                'BQ_PLAN_INS_BROKER_FEES_TOT_AMT',
+                'BQ_PLAN_WLFR_BNFT_HEALTH_IND',
+                'BQ_PLAN_WLFR_BNFT_DENTAL_IND',
+                'BQ_PLAN_WLFR_BNFT_VISION_IND',
+                'BQ_PLAN_WLFR_BNFT_LIFE_INSUR_IND',
+                'BQ_PLAN_WLFR_BNFT_TEMP_DISAB_IND',
+                'BQ_PLAN_WLFR_BNFT_LONG_TERM_DISAB_IND',
+                'BQ_PLAN_WLFR_BNFT_UNEMP_IND',
+                'BQ_PLAN_WLFR_BNFT_DRUG_IND',
+                'BQ_PLAN_WLFR_BNFT_STOP_LOSS_IND',
+                'BQ_PLAN_WLFR_BNFT_HMO_IND',
+                'BQ_PLAN_WLFR_BNFT_PPO_IND',
+                'BQ_PLAN_WLFR_BNFT_INDEMNITY_IND',
+                'BQ_PLAN_WLFR_BNFT_OTHER_IND',
+                'BQ_PLAN_WLFR_TYPE_BNFT_OTH_TEXT',
+                'BQ_PLAN_WLFR_PREMIUM_RCVD_AMT',
+                'BQ_PLAN_WLFR_UNPAID_DUE_AMT',
+                'BQ_PLAN_WLFR_RESERVE_AMT',
+                'BQ_PLAN_WLFR_TOT_EARNED_PREM_AMT',
+                'BQ_PLAN_WLFR_CLAIMS_PAID_AMT',
+                'BQ_PLAN_WLFR_INCR_RESERVE_AMT',
+                'BQ_PLAN_WLFR_INCURRED_CLAIM_AMT',
+                'BQ_PLAN_WLFR_CLAIMS_CHRGD_AMT',
+                'BQ_PLAN_WLFR_RET_COMMISSIONS_AMT',
+                'BQ_PLAN_WLFR_RET_ADMIN_AMT',
+                'BQ_PLAN_WLFR_RET_OTH_COST_AMT',
+                'BQ_PLAN_WLFR_RET_OTH_EXPENSE_AMT',
+                'BQ_PLAN_WLFR_RET_TAXES_AMT',
+                'BQ_PLAN_WLFR_RET_CHARGES_AMT',
+                'BQ_PLAN_WLFR_RET_OTH_CHRGS_AMT',
+                'BQ_PLAN_WLFR_RET_TOT_AMT',
+                'BQ_PLAN_WLFR_REFUND_CASH_IND',
+                'BQ_PLAN_WLFR_REFUND_CREDIT_IND',
+                'BQ_PLAN_WLFR_REFUND_AMT',
+                'BQ_PLAN_WLFR_HELD_BNFTS_AMT',
+                'BQ_PLAN_WLFR_CLAIMS_RESERVE_AMT',
+                'BQ_PLAN_WLFR_OTH_RESERVE_AMT',
+                'BQ_PLAN_WLFR_DIVNDS_DUE_AMT',
+                'BQ_PLAN_WLFR_TOT_CHARGES_PAID_AMT',
+                'BQ_PLAN_WLFR_ACQUIS_COST_AMT',
+                'BQ_PLAN_WLFR_ACQUIS_COST_TEXT',
+                'BQ_PLAN_INS_FAIL_PROVIDE_INFO_IND',
+                'BQ_PLAN_INS_FAIL_PROVIDE_INFO_TEXT')
+F5500_scha_20181031=F5500_scha_orig[,varlist_schea]
+
+
+names(F5500_part1_orig)=paste0("BQ_PLAN_",names(F5500_part1_orig))
+F5500_part1_orig$BQ_PLAN_FILING_ID=F5500_part1_orig$BQ_PLAN_ACK_ID
+F5500_part1_orig$BQ_PLAN_SCHEDULE_A_FORM_NUMBER=F5500_part1_orig$BQ_PLAN_FORM_ID
+F5500_part1_orig$BQ_PLAN_INS_BROKER_ROW_NUMBER=F5500_part1_orig$BQ_PLAN_ROW_ORDER
+varlist_brok=c('FILING_ID',
+               'SCHEDULE_A_FORM_NUMBER',
+               'INS_BROKER_ROW_NUMBER',
+               'INS_BROKER_NAME',
+               'INS_BROKER_US_ADDRESS1',
+               'INS_BROKER_US_ADDRESS2',
+               'INS_BROKER_US_CITY',
+               'INS_BROKER_US_STATE',
+               'INS_BROKER_US_ZIP',
+               'INS_BROKER_FOREIGN_ADDRESS1',
+               'INS_BROKER_FOREIGN_ADDRESS2',
+               'INS_BROKER_FOREIGN_CITY',
+               'INS_BROKER_FOREIGN_PROV_STATE',
+               'INS_BROKER_FOREIGN_CNTRY',
+               'INS_BROKER_FOREIGN_POSTAL_CD',
+               'INS_BROKER_COMM_PD_AMT',
+               'INS_BROKER_FEES_PD_AMT',
+               'INS_BROKER_FEES_PD_TEXT',
+               'INS_BROKER_CODE')
+F5500_brok_20181031=F5500_part1_orig[,varlist_brok]
+
+
+## save data
+write.csv(F5500_20181031,paste0(folder_path,"report/radius_main_5500_oct_2018.csv"))
+write.csv(F5500_scha_20181031,paste0(folder_path,"report/radius_sch_a_oct_2018.csv"))
+write.csv(F5500_brok_20181031,paste0(folder_path,"report/radius_sch_a_broker_oct_2018.csv"))
