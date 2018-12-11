@@ -168,6 +168,7 @@ varlist_brok=c('FILING_ID',
                'INS_BROKER_FEES_PD_AMT',
                'INS_BROKER_FEES_PD_TEXT',
                'INS_BROKER_CODE')
+varlist_brok=paste0("BQ_PLAN_",varlist_brok)
 F5500_brok_20181031=F5500_part1_orig[,varlist_brok]
 
 
